@@ -13,6 +13,8 @@ public class Click : MonoBehaviour
     public Text comboText;
     public Text maxText;
 
+    public float failTime;
+
     bool T1=false;
 
     public GameObject Face;
@@ -72,6 +74,8 @@ public class Click : MonoBehaviour
                 refGameMgr.Count_M = refGameMgr.Count_C;
             }
             refGameMgr.Count_C = 0;
+
+            StartCoroutine(WaitFor());
         }
         else
         {
@@ -83,6 +87,31 @@ public class Click : MonoBehaviour
     {
         Face.gameObject.SetActive(false);
     }
+    void FaceDelay()
+    {
+        Face.gameObject.SetActive(true);
+
+        if (Face.activeSelf == true)
+        {
+            failTime++;
+            Debug.Log(failTime);
+
+        }
+ 
+    }
+
+    IEnumerator WaitFor()
+    {
+        Face.gameObject.SetActive(true);
+        if (Face.activeSelf == true)
+        {
+            failTime += failTime;
+        }
+        yield return new WaitForSeconds(failTime);
+
+        Face.gameObject.SetActive(false);
+    }
+
     public void ClickEvents()
     {
         var refGameMgr = GameManager.s_Instance;

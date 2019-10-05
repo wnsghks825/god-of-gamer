@@ -9,9 +9,7 @@ public class GameManager : Singleton<GameManager>
     public int Count_S { get; set; }
     public int Count_F { get; set; }
     public int Count_C { get; set; }
-    public int Count_C2 { get; set; }
     public int Count_M { get; set; }
-    public int Count_M2 { get; set; }
-    public int Count_P { get; set; }
+
 }
 

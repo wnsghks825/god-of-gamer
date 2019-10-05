@@ -7,15 +7,25 @@ using UnityEngine.UI;
 public class ChangeEvent : MonoBehaviour
 {
 
-    public GameObject P4;
-    public GameObject P5;
-    public GameObject P6;
+    public float delayTime; //fever시 화면 전환 딜레이
 
     Vector2 MousePosition;
     Camera Camera;
 
+    List<Sprite> phase = new List<Sprite>();
+
+    [SerializeField]
+    Image Phase;
+
     private void Start()
     {
+        phase.Add(Resources.Load<Sprite>("P1"));
+        phase.Add(Resources.Load<Sprite>("P2"));
+        phase.Add(Resources.Load<Sprite>("P3"));
+        phase.Add(Resources.Load<Sprite>("P4"));
+        phase.Add(Resources.Load<Sprite>("P5"));
+        phase.Add(Resources.Load<Sprite>("P6"));
+
         Camera = Camera.main.GetComponent<Camera>();
     }
 
@@ -30,6 +40,22 @@ public class ChangeEvent : MonoBehaviour
         }
     }
 
+    IEnumerator Fever() //피버 시 애니메이션 변경
+    {
+        for (int i = 3; i < 6; i++)
+        {
+            Phase.sprite = phase[i];
+            yield return new WaitForSeconds(delayTime);
+            if (i == 5) { i = 2; }
+        }
+
+    }
+
+    public void FeverEvent()
+    {
+        //Judge();
+        StartCoroutine(Fever());
+    }
     /*
     GraphicRaycaster graphicRaycaster;
     PointerEventData pointEventData;

@@ -22,10 +22,11 @@ public class Click : MonoBehaviour
 
     public GameObject[] P;
 
+    List<Sprite> phase = new List<Sprite>();
+
     [SerializeField]
     Image Phase;
      
-    Sprite Phase1, Phase2, Phase3;
 
     private void Awake()
     {
@@ -34,77 +35,20 @@ public class Click : MonoBehaviour
 
     private void Start()
     {
-        Phase1 = Resources.Load<Sprite>("P1");  //배열 말고 리스트!
-        Phase2 = Resources.Load<Sprite>("P2");  
-        Phase3 = Resources.Load<Sprite>("P3"); 
-
-    }
-    void Active(GameObject P)
-    {
-        P.gameObject.SetActive(true);
-    }
-    void Deactive(GameObject P)
-    {
-        P.gameObject.SetActive(false);
+        phase.Add(Resources.Load<Sprite>("P1"));
+        phase.Add(Resources.Load<Sprite>("P2"));
+        phase.Add(Resources.Load<Sprite>("P3"));
     }
 
     void ChangePattern()    //패턴 전환
     {
-        int random = Random.Range(0, 3);
+        int random = Random.Range(0, 3);    // 0 이상 3 미만
 
-        switch (random)
-        {
-            case 0:
-                {
-                    /*
-                    Active(P[0]);
-                    Deactive(P[1]);
-                    Deactive(P[2]);
-                    */
-                    Phase.sprite = Phase1;
-                    break;
-                }
-            case 1:
-                {
-                    /*
-                    Active(P[1]);
-                    Deactive(P[0]);
-                    Deactive(P[2]);
-                    */
-                    Phase.sprite = Phase2;
-                    break;
-                }
-            case 2:
-                {
-                    /*
-                    Active(P[2]);
-                    Deactive(P[0]);
-                    Deactive(P[1]);
-                    */
-                    Phase.sprite = Phase3;
-                    break;
-                }
-        }
+        Phase.sprite = phase[random];
     }
 
     public void ToggleFever()
     {
-
-    }
-
-    IEnumerator Fever() //피버 시 애니메이션 변경
-    {
-        P[0].gameObject.SetActive(false);
-        P[1].gameObject.SetActive(false);
-        P[2].gameObject.SetActive(false);
-        for (int i = 3; i < 6; i++)
-        {
-            P[i].gameObject.SetActive(true);
-            yield return new WaitForSeconds(delayTime);
-            P[i].gameObject.SetActive(false);
-
-            if (i == 5) { i = 2; }
-        }
 
     }
 
@@ -139,23 +83,26 @@ public class Click : MonoBehaviour
         Face.gameObject.SetActive(false);
     }
 
-    public void FeverEvent()
-    {
-        isFever = true;
-        judge = false;
-        Judge();
-        StartCoroutine(Fever());
-    }
-
     public void ClickEvents()   //ButtonManager를 써볼까?
     {
         string name = Phase.sprite.name;
+        int name2 = 0;
         string[] BT = { "준환트위치", "준환냄새", "준환바보" };
         int n = 0;
-        
-        if (name == "P1")   //틀린 경우(101)
+        if (gameObject.name == "준환트위치")
         {
-            if (gameObject.name == BT[n])
+            n = 0;
+            if (gameObject.name == "준환냄새")
+            {
+                n = 1;
+
+            }
+            else {n = 2;}       
+        }//버튼 누른다.
+
+        if (name == "P1")   //틀린 경우(101) - 네임이 각각 P1,P2,P3인 경우를 체크하는 변수를 생성. 
+        {
+            if (gameObject.name == BT[0])
             {
                 judge = true;
 
@@ -164,10 +111,11 @@ public class Click : MonoBehaviour
             {
                 judge = false;
             }
+            //Debug.Log("P" + n);
         }
         if (name == "P2")   //틀린 경우(101)
         {
-            if (gameObject.name == "준환냄새")
+            if (gameObject.name == BT[1])
             {
                 judge = true;
 
@@ -179,9 +127,10 @@ public class Click : MonoBehaviour
         }
         if (name == "P3")   //틀린 경우(101)
             {
-            if (gameObject.name == "준환바보")
+            if (gameObject.name == BT[2])
             {
                 judge = true;
+
             }
             else
             {

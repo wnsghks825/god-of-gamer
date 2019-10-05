@@ -595,7 +595,7 @@ GameObject:
   - component: {fileID: 607350543}
   m_Layer: 5
   m_Name: "\uC900\uD658\uD2B8\uC704\uCE58"
-  m_TagString: Untagged
+  m_TagString: Button
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -805,7 +805,7 @@ GameObject:
   - component: {fileID: 669432168}
   m_Layer: 5
   m_Name: "\uC900\uD658\uBC14\uBCF4"
-  m_TagString: Untagged
+  m_TagString: Button
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1870,7 +1870,7 @@ GameObject:
   - component: {fileID: 1524020551}
   - component: {fileID: 1524020550}
   - component: {fileID: 1524020549}
-  - component: {fileID: 1524020553}
+  - component: {fileID: 1524020552}
   m_Layer: 5
   m_Name: ToggleButton
   m_TagString: Untagged
@@ -1941,7 +1941,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1524020553}
+      - m_Target: {fileID: 1524020552}
         m_MethodName: FeverEvent
         m_Mode: 1
         m_Arguments:
@@ -1988,7 +1988,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1524020547}
   m_CullTransparentMesh: 0
---- !u!114 &1524020553
+--- !u!114 &1524020552
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1997,20 +1997,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1524020547}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6e979e9066a5fca4791290d8e33b91af, type: 3}
+  m_Script: {fileID: 11500000, guid: e5546b37b7527f74caebc5ad89975600, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  failTime: 0
   delayTime: 1
-  Face: {fileID: 1299278830}
-  P:
-  - {fileID: 926628255}
-  - {fileID: 804837125}
-  - {fileID: 777348726}
-  - {fileID: 1012531185}
-  - {fileID: 1497463706}
-  - {fileID: 864491017}
-  Phase: {fileID: 0}
+  Phase: {fileID: 1807430237}
 --- !u!1 &1745490983
 GameObject:
   m_ObjectHideFlags: 0
@@ -2027,7 +2018,7 @@ GameObject:
   - component: {fileID: 1745490989}
   m_Layer: 5
   m_Name: "\uC900\uD658\uB0C4\uC0C8"
-  m_TagString: Untagged
+  m_TagString: Button
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

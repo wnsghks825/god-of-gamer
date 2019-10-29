@@ -1,0 +1,6 @@
+﻿Key,EvDone,Var,Num,Condition,Time
+Ev01,False,S,1,Over,2
+Ev02,False,F,1,Over,2
+Ev03,False,C,8,Over,0
+Ev04,FALSE,C,9,Over,0
+Ev05,False,C,10,Equal,10

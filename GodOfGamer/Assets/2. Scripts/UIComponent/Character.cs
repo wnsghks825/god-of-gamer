@@ -33,6 +33,8 @@ namespace GodOfGamer
         private Image _image;
         private GameMgr _gameMgr;
 
+        int curObjIndex = -1;
+        int check = 0;
         /// <summary>
         /// 이미지 크기 및 위치 셋팅
         /// </summary>
@@ -40,8 +42,8 @@ namespace GodOfGamer
         {
             var rectTransform = GetComponent<RectTransform>();
 
-            rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, width);
-            rectTransform.SetInsetAndSizeFromParentEdge(RectTransform.Edge.Bottom, 0, width * 0.6768f);
+            rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, width*0.98f);
+            rectTransform.SetInsetAndSizeFromParentEdge(RectTransform.Edge.Bottom, 5, width*0.9f);
         }
 
         /// <summary>
@@ -49,10 +51,28 @@ namespace GodOfGamer
         /// </summary>
         public void ChangeImage()
         {
-            int randomValue = Random.Range(_defaultPatternStart, _defaultPatternEnd + 1);
+            //int randomValue = Random.Range(_defaultPatternStart, _defaultPatternEnd + 1);
+            int objIndex = 0;
 
-            _image.sprite = _gameMgr.patternList[randomValue].sprite;
-            _gameMgr.cntPatternIdx = (byte)randomValue;
+            objIndex = Random.Range(_defaultPatternStart, _defaultPatternEnd + 1);
+            if (curObjIndex != objIndex)
+            {
+                curObjIndex = objIndex;
+                _image.sprite = _gameMgr.patternList[curObjIndex].sprite;
+                _gameMgr.cntPatternIdx = (byte)curObjIndex;
+
+            }
+            //if (curObjIndex == objIndex)
+            //{
+            //    check++;
+            //    if (check == 2)
+            //    {
+            //        _image.sprite = _gameMgr.patternList[curObjIndex].sprite;
+            //        _gameMgr.cntPatternIdx = (byte)curObjIndex;
+
+            //        check = 0;
+            //    }
+            //}
         }
 
         public void ChangeImage(int idx)
@@ -109,7 +129,7 @@ namespace GodOfGamer
             switch (newState)
             {
                 case State.Fever:
-                    fever.Active(10.0f);
+                    fever.Active(15.0f);
                     Debug.Log("ChangeState(Fever)");
                     break;
 

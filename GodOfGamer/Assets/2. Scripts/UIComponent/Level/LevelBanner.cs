@@ -22,6 +22,7 @@ namespace GodOfGamer
         public void LevelUp()
         {
             _levelDisplay.RenewTextLevel(++level);
+            //_experienceBar._slider.maxValue = (int)(Mathf.Pow(1.1f, (level - 1)) * 100);
         }
 
         /// <summary>

@@ -14,9 +14,7 @@ namespace GodOfGamer
         [SerializeField, Header("경험치 가중치")]
         private float _weight;
 
-   
-
-        private Slider _slider;
+        public Slider _slider;
         private LevelBanner _levelBanner;
         private float value { get; set; }
         /// <summary>
@@ -29,17 +27,13 @@ namespace GodOfGamer
 
             _slider.value += experience;
             value += experience;
-            int maxValue = (int)(Mathf.Pow(_weight, (_levelBanner.level-1)) * 100);
-            _slider.maxValue = maxValue;
-            if (value >= _slider.maxValue)
+            //int maxValue = (int)(Mathf.Pow(_weight, (_levelBanner.level-1)) * 100);
+            //_slider.maxValue = (int)(Mathf.Pow(_weight, (_levelBanner.level - 1)) * 100);
+            if (_slider.value >= _slider.maxValue)
             {
+                _slider.value = 0;
                 _levelBanner.LevelUp();
-
-                _slider.value = value - maxValue;
-                Debug.Log(value - maxValue);
-                value = _slider.value;
             }
-
         }
 
         public void PassingValue(float experience)

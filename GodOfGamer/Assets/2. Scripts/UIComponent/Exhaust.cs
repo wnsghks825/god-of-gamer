@@ -28,31 +28,38 @@ namespace GodOfGamer
         public float maxGauge { get; private set; }
 
         private SpriteAnimation _spriteAnimation;
+
+        private Fever _fever { get; set; }
         
         public void Active()
         {
             enabled = true;
         }
-
+        public void GaugeReset()
+        {
+            gauge = 0;
+        }
         /// <summary>
         ///  실패 판정 누적
         /// </summary>
         public void NormalFail()
         {
             gauge = _exhWeight * gauge + _exhEnter;
-
+            _fever.ResetGauge();
             if (gauge >= maxGauge)
             {
                 var refEvMgr = GameMgr.s_Instance.eventMgr;
 
                 if (refEvMgr != null)
                 {
-                    for (int i = 0; i < _exhAnimation.Length; i++)
-                        _exhAnimation[i].enabled = false;
+                    //for (int i = 0; i < _exhAnimation.Length; i++)
+                    //{
+                    //    _exhAnimation[i].enabled = false;
+                    //}
 
                     // 캐릭터 상태를 탈진으로 변경
                     refEvMgr.BasicEventHandle(Event.EventMgr.BasicEvent.Exhausted);
-
+                    SoundManager.instance.ShockSound();
                     return;
                 }
             }
@@ -65,6 +72,7 @@ namespace GodOfGamer
             {
                 _exhAnimation[1].enabled = true;
             }
+            Debug.Log(gauge);
         }
 
         /// <summary>
@@ -74,13 +82,13 @@ namespace GodOfGamer
         {
             var refGameMgr = GameMgr.s_Instance;
             gauge = gauge - refGameMgr.score.combo;
-
+                Debug.Log(gauge);
             if (gauge <= 0)
             {
-                for (int i = 0; i < _exhAnimation.Length; i++)
-                {
-                    _exhAnimation[i].enabled = false;
-                }
+                //for (int i = 0; i < _exhAnimation.Length; i++)
+                //{
+                //    _exhAnimation[i].enabled = false;
+                //}
 
                 // 기본상태로 변경하기
                 refGameMgr.character.EnableDefaultState();
@@ -117,12 +125,13 @@ namespace GodOfGamer
             }
             if (gauge <= 0)
                 gauge = 0;
+
         }
 
         private void Awake()
         {
             _spriteAnimation = GetComponentInChildren<SpriteAnimation>();
-
+            _fever = GetComponentInParent<GameMgr>().GetComponentInChildren<Fever>();
 
             // 최대 게이지 설정
             maxGauge = 100.0f;
@@ -133,7 +142,10 @@ namespace GodOfGamer
         private void OnEnable()
         {
             _spriteAnimation.enabled = true;
-
+            for(int i = 0; i < _exhAnimation.Length; i++)
+            {
+                _exhAnimation[i].enabled = false;
+            }
             gauge = maxGauge;
         }
 

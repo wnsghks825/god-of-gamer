@@ -20,7 +20,9 @@ namespace GodOfGamer
         /// <param name="idx">버튼 인덱스</param>
         public void ClickButton(int btnidx)
         {
+            SoundManager.instance.ButtonSound();
             root.Handle(btnidx);
+
         }
 
         /// <summary>
@@ -37,7 +39,7 @@ namespace GodOfGamer
 
         public void SettingGridLayoutGroup(float width, float height)
         {
-            _gridLayoutGroup.cellSize = new Vector2(width / 3, height * 0.25f);
+            _gridLayoutGroup.cellSize = new Vector2(width / 3, height);
         }
 
         protected override void Awake()

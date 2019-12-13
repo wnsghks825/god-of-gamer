@@ -30,6 +30,12 @@ namespace GodOfGamer
         [SerializeField]
         private SpriteAnimation[] _wispAnimation = null;
 
+        [SerializeField]
+        private Image feverMouth;
+
+        [SerializeField]
+        private SpriteAnimation[] _feverEye = null;
+
         public float gauge { get; private set; }
         public float maxGuage { get; private set; }
 
@@ -37,8 +43,14 @@ namespace GodOfGamer
         private WaitForSeconds _wait;
         private SpriteAnimation _fireAnimation;
 
-        private float _consumptionSec;  // 초당소비량
+        private Exhaust _exhaust;
 
+        private float _consumptionSec;  // 초당소비량
+        
+        public void ResetGauge()
+        {
+            gauge = 0;
+        }
         /// <summary>
         /// 이 클래스 컴포넌트를 활성화 시켜주기 위한 함수
         /// </summary>
@@ -59,6 +71,8 @@ namespace GodOfGamer
 
             // Fever 컴포넌트 활성화
             enabled = true;
+
+            SoundManager.instance.FireSound();
         }
 
         /// <summary>
@@ -67,6 +81,8 @@ namespace GodOfGamer
         public void GaugeIncrease()
         {
             gauge += maxGuage / _feverCondition;
+
+            //_exhaust.GaugeReset();
 
             if (gauge >= maxGuage)
             {
@@ -86,6 +102,7 @@ namespace GodOfGamer
             {
                 _wispAnimation[(int)gauge / 20 - 1].enabled = true;
             }
+            Debug.Log(gauge);
         }
 
         public void GaugeReset()
@@ -105,14 +122,13 @@ namespace GodOfGamer
                 _wispAnimation[i].enabled = false;
             }
         }
-
-
         #region MonoBehaviour EventFunc Region
 
         private void Awake()
         {
             _fireAnimation = GetComponentInChildren<SpriteAnimation>();
-
+            _exhaust = GetComponentInParent<GameMgr>().GetComponentInChildren<Exhaust>();
+            feverMouth.enabled = false;
             _wait = new WaitForSeconds(_waitTime);
 
             // 최대게이지 설정
@@ -124,13 +140,23 @@ namespace GodOfGamer
         private void OnEnable()
         {
             _fireAnimation.enabled = true;
+            feverMouth.enabled = true;
+            for(int i = 0; i < _feverEye.Length; i++)
+            {
+                _feverEye[i].enabled = true;
+            }
             _coroutine = StartCoroutine(FeverActivate());
         }
 
         private void OnDisable()
         {
             gauge = 0.0f;
+            feverMouth.enabled = false;
             _fireAnimation.enabled = false;
+            for (int i = 0; i < _feverEye.Length; i++)
+            {
+                _feverEye[i].enabled = false;
+            }
             if (_coroutine != null)
                 StopCoroutine(_coroutine);
         }
@@ -170,6 +196,7 @@ namespace GodOfGamer
                 // 현재피버인덱스가 특정값을 초과할경우
                 if (cntFeverIdx > _FeverPatterEnd)
                     cntFeverIdx = _FeverPatterStart;
+
             }
 
             // 저장해둔 인덱스로 다시 설정해준다.
